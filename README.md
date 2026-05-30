@@ -11,7 +11,8 @@ To begin development and testing locally, please follow these steps in your term
 1. Clone the repo by running `git clone https://github.com/SolyncSoftware/IdeaLync.git`.
 2. Go inside the newly cloned folder (`cd IdeaLync`).
 3. Run `bun install` to install the packages.
-4. Great! Now run `I FORGOT THE COMMAND PLEASE REPLACE THIS` to run the development server.
+4. Great! Now configure `config.json` with your Discord application and roles.
+5. You are now able to run the bot locally and see your Discord application/bot come to life! :)
 
 ## Goals
 
