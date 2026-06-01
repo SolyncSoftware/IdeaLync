@@ -41,6 +41,14 @@
               bun2nix.packages.${system}.default
             ];
           };
+
+          withLsp = pkgs.mkShell {
+            packages = with pkgs; [
+              bun
+              bun2nix.packages.${system}.default
+              typescript-language-server
+            ];
+          };
         }
       );
 
