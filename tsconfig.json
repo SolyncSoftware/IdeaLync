@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        // Target modern Node.js (Bun supports even newer features)
+        "target": "ES2022",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        // Output settings (if compiling)
+        "outDir": "./dist",
+        "rootDir": "./src",
+        // Strict type-checking
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        // Allows importing JSON modules
+        "resolveJsonModule": true,
+        // For Bun's environment types (optional but nice)
+        "types": ["bun-types"]
+    },
+    "include": ["src/**/*.ts", "*.ts"],
+    "exclude": ["node_modules", "dist"]
+}
