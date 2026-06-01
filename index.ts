@@ -5,7 +5,6 @@ const {
     IDEALYNC_ROLE_ID
 } = Bun.env;
 
-
 if (!IDEALYNC_ROLE_ID) {
     throw new Error("IDEALYNC_ROLE_ID isn't set in environment variables.");
 }
