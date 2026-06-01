@@ -19,7 +19,7 @@ To begin development and testing locally, please follow these steps in your term
 
 - Improve our workflow internally
 - Open source
-- Internal initiative-driven tasks with a [Kanban Board]().
+- Internal initiative-driven tasks with a [Kanban Board](https://github.com/orgs/SolyncSoftware/projects/8).
 
 ## Resources
 
