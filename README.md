@@ -12,7 +12,7 @@ To begin development and testing locally, please follow these steps in your term
 2. Go inside the newly cloned folder (`cd IdeaLync`).
 3. Run `bun install` to install the packages.
 4. Great! Now configure `.env` by populating the values in `.env_example`.
-5. Now run `bun run index.ts` to run the development server.
+5. Now run `bun run src/index.ts` to run the development server.
 6. See the bot come to life! :)
 
 ## Goals
