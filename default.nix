@@ -9,5 +9,10 @@ bun2nix.mkDerivation {
     bunNix = ./bun.nix;
   };
 
-  module = "index.ts";
+  module = "src/index.ts";
+
+  # hacky way to let bun writee to the cache dir
+  postBunSetInstallCacheDirPhase = ''
+    chmod -R u+w "$BUN_INSTALL_CACHE_DIR"
+  '';
 }
