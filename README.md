@@ -8,12 +8,16 @@
 
 To begin development and testing locally, please follow these steps in your terminal of choice:
 
-1. Clone the repo by running `git clone https://github.com/SolyncSoftware/IdeaLync.git`.
-2. Go inside the newly cloned folder (`cd IdeaLync`).
-3. Run `uv sync` to install the packages.
-4. Great! Now configure `.env` by populating the values in `.env_example`.
-5. Now run `uv run idealync` to run the bot.
-6. See the bot come to life! :)
+1. Install uv and Ruff (optional but recommended) first using a package manager
+or by directly installing it from uv's [GitHub Releases](https://github.com/astral-sh/uv/releases/latest)
+and Ruff's [GitHub Releases](https://github.com/astral-sh/ruff/releases/latest)
+
+2. Clone the repo by running `git clone https://github.com/SolyncSoftware/IdeaLync.git`.
+3. Go inside the newly cloned folder (`cd IdeaLync`).
+4. Run `uv sync` to install the packages.
+5. Great! Now configure `.env` by populating the values in `.env_example`.
+6. Now run `uv run idealync` to run the bot.
+7. See the bot come to life! :)
 
 ## Goals
 
