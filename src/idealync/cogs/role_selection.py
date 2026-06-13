@@ -5,10 +5,12 @@ from discord.ext import commands
 
 from idealync import Bot
 
+from typing import Any;
+
 logger = logging.getLogger(__name__)
 
 
-class RoleSelect(discord.ui.Select):
+class RoleSelect(discord.ui.Select[Any]):
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
         options = [
@@ -23,7 +25,8 @@ class RoleSelect(discord.ui.Select):
         )
 
     async def callback(self, interaction: discord.Interaction) -> None:
-        if interaction.user is None or interaction.guild is None:
+        if interaction.guild is None:
+            await interaction.response.send_message("this needs to be used in a server", ephemeral=True)
             return
 
         member = interaction.user
