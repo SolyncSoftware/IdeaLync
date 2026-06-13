@@ -1,4 +1,5 @@
 {
+    "python.analysis.typeCheckingMode": "strict",
     "conventionalCommits.scopes": [""],
     "workbench.browser.openLocalhostLinks": false
 }
