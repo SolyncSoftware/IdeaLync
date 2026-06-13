@@ -1,8 +1,5 @@
 {
-    "[svelte]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": true
-    },
+    "python.analysis.typeCheckingMode": "strict",
     "conventionalCommits.scopes": [""],
     "workbench.browser.openLocalhostLinks": false
 }

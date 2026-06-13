@@ -1,3 +1,10 @@
 {
-    "recommendations": ["esbenp.prettier-vscode", "vivaxy.vscode-conventional-commits", "jasonhaxstuff.discord-js-tools"]
+    "recommendations": [
+        "vivaxy.vscode-conventional-commits",
+        "ms-python.isort",
+        "ms-python.debugpy",
+        "ms-python.vscode-pylance",
+        "njqdev.vscode-python-typehint",
+        "wasimaster.discord-py-snippets"
+    ]
 }
