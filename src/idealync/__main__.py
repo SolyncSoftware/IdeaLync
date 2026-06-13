@@ -45,9 +45,9 @@ def main() -> None:
     )
 
     token = (
-        os.environ.get("IDEALYNC_DISCORD_TOKEN")
+        os.environ.get("APP_DISCORD_TOKEN")
         or sys.exit(
-            "error! IDEALYNC_DISCORD_TOKEN is not optional\n"
+            "error! APP_DISCORD_TOKEN is not optional\n"
             "please set it in environment variables."
         )
     )
