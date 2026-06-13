@@ -7,12 +7,22 @@ from discord.ext import commands
 
 intents = discord.Intents.default()
 intents.members = True
+intents.reactions = True
 intents.message_content = False
 
 class Bot(commands.Bot):
-    def __init__(self, role_id: int) -> None:
-        super().__init__(intents=intents, command_prefix="unused")
-        self.config = IdeaLyncConfig(role_id)
+    def __init__(
+        self,
+        role_channel_id: int,
+        member_role_id: int,
+        observer_role_id: int,
+    ) -> None:
+        super().__init__(intents=intents)
+        self.config = IdeaLyncConfig(
+            role_channel_id=role_channel_id,
+            member_role_id=member_role_id,
+            observer_role_id=observer_role_id,
+        )
 
     async def setup_hook(self) -> None:
         cogs_dir = os.path.join(os.path.dirname(__file__), "cogs")

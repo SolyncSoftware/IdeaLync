@@ -20,10 +20,26 @@ logging.basicConfig(
 
 
 def main() -> None:
-    role_id = int(
-        os.environ.get("IDEALYNC_ROLE_ID")
+    role_channel_id = int(
+        os.environ.get("ROLE_CHANNEL_ID")
         or sys.exit(
-            "error! IDEALYNC_ROLE_ID is not optional\n"
+            "error! ROLE_CHANNEL_ID is not optional\n"
+            "please set it in environment variables."
+        )
+    )
+
+    member_role_id = int(
+        os.environ.get("MEMBER_ID")
+        or sys.exit(
+            "error! MEMBER_ID is not optional\n"
+            "please set it in environment variables."
+        )
+    )
+
+    observer_role_id = int(
+        os.environ.get("OBSERVER_ID")
+        or sys.exit(
+            "error! OBSERVER_ID is not optional\n"
             "please set it in environment variables."
         )
     )
@@ -36,7 +52,7 @@ def main() -> None:
         )
     )
 
-    bot = Bot(role_id)
+    bot = Bot(role_channel_id, member_role_id, observer_role_id)
     bot.run(token)
 
 

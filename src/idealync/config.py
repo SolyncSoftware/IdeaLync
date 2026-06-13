@@ -1,6 +1,10 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class IdeaLyncConfig:
-    """General config for IdeaLync"""
-    role_id: int # the role that all bots will have
+    """General config for IdeaLync."""
+
+    role_channel_id: int # the channel for posting role selection
+    member_role_id: int # the member role id
+    observer_role_id: int # observer/inactive role id
