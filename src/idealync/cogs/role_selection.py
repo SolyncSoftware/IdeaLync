@@ -84,8 +84,8 @@ class RoleSelection(commands.Cog):
 
         embed = discord.Embed(
             title="Choose your role",
-            description="Use the dropdown below to switch between Member and Observer.",
-            color=discord.Color.blurple(),
+            description="Use the dropdown below to switch between Member and Observer/Inactive.",
+            color=discord.Color(0xF36647),
         )
 
         view = discord.ui.View()
