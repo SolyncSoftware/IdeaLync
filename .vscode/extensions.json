@@ -1,6 +1,5 @@
 {
     "recommendations": [
-        "esbenp.prettier-vscode",
         "vivaxy.vscode-conventional-commits",
         "ms-python.isort",
         "ms-python.debugpy",
