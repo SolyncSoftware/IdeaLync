@@ -7,4 +7,4 @@ class IdeaLyncConfig:
     role_channel_id: int # the channel for posting role selection
     member_role_id: int # the member role id
     observer_role_id: int # observer/inactive role id
-    meeting_voice_channel_id: int
+    meeting_voice_channel_id: int # meeting voice channel id for meet scheduler
