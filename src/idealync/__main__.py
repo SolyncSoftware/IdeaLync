@@ -1,6 +1,7 @@
 import logging
 import os
 import sys
+from typing import Never
 import dotenv
 
 from idealync import Bot
@@ -18,41 +19,39 @@ logging.basicConfig(
     ],
 )
 
+def required_env_variable_error(env_var: str) -> Never:
+    sys.exit(
+        f"error! {env_var} is not optional\n"
+        "please set it in environment variables"
+    )
 
 def main() -> None:
     role_channel_id = int(
         os.environ.get("ROLE_CHANNEL_ID")
-        or sys.exit(
-            "error! ROLE_CHANNEL_ID is not optional\n"
-            "please set it in environment variables."
-        )
+        or required_env_variable_error("ROLE_CHANNEL_ID")
     )
 
     member_role_id = int(
         os.environ.get("MEMBER_ID")
-        or sys.exit(
-            "error! MEMBER_ID is not optional\n"
-            "please set it in environment variables."
-        )
+        or required_env_variable_error("MEMBER_ID")
     )
 
     observer_role_id = int(
         os.environ.get("OBSERVER_ID")
-        or sys.exit(
-            "error! OBSERVER_ID is not optional\n"
-            "please set it in environment variables."
-        )
+        or required_env_variable_error("OBSERVER_ID")
+    )
+
+    meeting_voice_channel_id = int(
+        os.environ.get("MEETING_VOICE_CHANNEL_ID")
+        or required_env_variable_error("MEETING_VOICE_CHANNEL_ID")
     )
 
     token = (
         os.environ.get("APP_DISCORD_TOKEN")
-        or sys.exit(
-            "error! APP_DISCORD_TOKEN is not optional\n"
-            "please set it in environment variables."
-        )
+        or required_env_variable_error("APP_DISCORD_TOKEN")
     )
 
-    bot = Bot(role_channel_id, member_role_id, observer_role_id)
+    bot = Bot(role_channel_id, member_role_id, observer_role_id, meeting_voice_channel_id)
     bot.run(token)
 
 
