@@ -19,4 +19,4 @@ class MemberEvents(commands.Cog):
         logger.info("Member %s updated roles", after.name)
 
 async def setup(bot: Bot) -> None:
-    await bot.add_cog(Events(bot))
+    await bot.add_cog(MemberEvents(bot))
