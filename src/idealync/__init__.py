@@ -16,6 +16,8 @@ class Bot(commands.Bot):
         member_role_id: int,
         observer_role_id: int,
         meeting_voice_channel_id: int,
+        idea_board_forum_id: int,
+        project_board_forum_id: int,
     ) -> None:
         # todo, make this shit dynamic
         super().__init__(intents=intents, command_prefix="unused")
@@ -24,6 +26,8 @@ class Bot(commands.Bot):
             member_role_id=member_role_id,
             observer_role_id=observer_role_id,
             meeting_voice_channel_id=meeting_voice_channel_id,
+            idea_board_forum_id=idea_board_forum_id,
+            project_board_forum_id=project_board_forum_id
         )
 
     async def setup_hook(self) -> None:
