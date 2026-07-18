@@ -19,11 +19,12 @@ logging.basicConfig(
     ],
 )
 
+
 def required_env_variable_error(env_var: str) -> Never:
     sys.exit(
-        f"error! {env_var} is not optional\n"
-        "please set it in environment variables"
+        f"error! {env_var} is not optional\nplease set it in environment variables"
     )
+
 
 def main() -> None:
     role_channel_id = int(
@@ -32,13 +33,11 @@ def main() -> None:
     )
 
     member_role_id = int(
-        os.environ.get("MEMBER_ID")
-        or required_env_variable_error("MEMBER_ID")
+        os.environ.get("MEMBER_ID") or required_env_variable_error("MEMBER_ID")
     )
 
     observer_role_id = int(
-        os.environ.get("OBSERVER_ID")
-        or required_env_variable_error("OBSERVER_ID")
+        os.environ.get("OBSERVER_ID") or required_env_variable_error("OBSERVER_ID")
     )
 
     meeting_voice_channel_id = int(
@@ -46,9 +45,8 @@ def main() -> None:
         or required_env_variable_error("MEETING_VOICE_CHANNEL_ID")
     )
 
-    token = (
-        os.environ.get("APP_DISCORD_TOKEN")
-        or required_env_variable_error("APP_DISCORD_TOKEN")
+    token = os.environ.get("APP_DISCORD_TOKEN") or required_env_variable_error(
+        "APP_DISCORD_TOKEN"
     )
 
     idea_board_forum_id = int(
@@ -67,7 +65,7 @@ def main() -> None:
         observer_role_id,
         meeting_voice_channel_id,
         idea_board_forum_id,
-        project_board_forum_id
+        project_board_forum_id,
     )
     bot.run(token)
 

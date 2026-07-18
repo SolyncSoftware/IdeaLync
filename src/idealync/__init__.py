@@ -9,6 +9,7 @@ intents = discord.Intents.default()
 intents.members = True
 intents.message_content = False
 
+
 class Bot(commands.Bot):
     def __init__(
         self,
@@ -27,7 +28,7 @@ class Bot(commands.Bot):
             observer_role_id=observer_role_id,
             meeting_voice_channel_id=meeting_voice_channel_id,
             idea_board_forum_id=idea_board_forum_id,
-            project_board_forum_id=project_board_forum_id
+            project_board_forum_id=project_board_forum_id,
         )
 
     async def setup_hook(self) -> None:
