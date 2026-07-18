@@ -81,6 +81,11 @@ class IdeaMaker(commands.Cog):
             )
             typing.cast(discord.ForumChannel, project_forum)
 
+            formatted_msg = (
+                f"{msg.content}\n{added_message}\n\n\\- Forwarded by IdeaLync."
+                if added_message is not None
+                else f"{msg.content}\n\n\\- Forwarded by IdeaLync."
+            )
             try:
                 # create_thread has content but pyright is tripping
                 await project_forum.create_thread(  # type: ignore
