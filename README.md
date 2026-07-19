@@ -3,13 +3,16 @@
 ## Features
 - IdeaMaker/PitchCreator
   1. Posts a fillable form in the specified channel for idea posting
-  2. Once submitted, ideas are then posted in a configured form channel, where ideas are stored (#idea-board)
+  2. Once submitted, ideas are then posted in a configured form channel, where ideas are stored (#pitching-board)
 - Meet Scheduler
   1.  Use ``/schedule`` command to open a modal for meeting information
   2.  Posts in the configured channel once submitted
 - Role Selection
   1. Posts a selection in the configured channel.
-  2. Select the specified roles defined in the config 
+  2. Select the specified roles defined in the config
+- Idea Forwarding
+  1. Use ``/forward`` to forward ideas from the #pitching-board to the #project-board (configurable channels)
+  2. Add a message to the forwarded idea so members can get clarification
 
 ## Getting Started
 
