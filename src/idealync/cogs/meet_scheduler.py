@@ -11,7 +11,6 @@ from typing import cast
 
 logger = logging.getLogger(__name__)
 
-
 class MeetSchedulerModal(ui.Modal, title="Schedule a meeting..."):
     def __init__(self, bot: Bot):
         super().__init__()

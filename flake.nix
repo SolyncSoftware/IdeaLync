@@ -1,5 +1,5 @@
 {
-  description = "hello world application using uv2nix";
+  description = "IdeaLync - internal bot for Solync";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";

@@ -86,11 +86,12 @@ class IdeaMaker(commands.Cog):
                 if added_message is not None
                 else f"{msg.content}\n\n\\- Forwarded by IdeaLync."
             )
+
             try:
                 # create_thread has content but pyright is tripping
                 await project_forum.create_thread(  # type: ignore
                     name=thread.name,
-                    content=f"{msg.content}\n\n\\- Forwarded by IdeaLync.",  # type: ignore
+                    content=formatted_msg,  # type: ignore
                 )
             except discord.errors.NotFound:
                 await interaction.followup.send(
