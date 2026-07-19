@@ -1,5 +1,16 @@
 # IdeaLync - internal bot for Solync
 
+## Features
+- IdeaMaker/PitchCreator
+  1. Posts a fillable form in the specified channel for idea posting
+  2. Once submitted, ideas are then posted in a configured form channel, where ideas are stored (#idea-board)
+- Meet Scheduler
+  1.  Use ``/schedule`` command to open a modal for meeting information
+  2.  Posts in the configured channel once submitted
+- Role Selection
+  1. Posts a selection in the configured channel.
+  2. Select the specified roles defined in the config 
+
 ## Getting Started
 
 > [!IMPORTANT]
