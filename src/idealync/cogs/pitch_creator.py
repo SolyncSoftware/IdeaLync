@@ -33,13 +33,13 @@ class _ForwardView(discord.ui.View):
         self.stop()
 
 
-class IdeaMaker(commands.Cog):
+class PitchCreator(commands.Cog):
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
     @app_commands.command(
         name="forward",
-        description="Forward an idea from the idea board to the project board.",
+        description="Forward a pitch from the pitching board to the project board.",
     )
     @app_commands.guild_only
     async def forward(
@@ -49,10 +49,10 @@ class IdeaMaker(commands.Cog):
 
         if (
             not isinstance(interaction.channel, discord.Thread)
-            or interaction.channel.parent_id != config.idea_board_forum_id
+            or interaction.channel.parent_id != config.pitching_board_forum_id
         ):
             await interaction.response.send_message(
-                "please run this command in the idea board!", ephemeral=True
+                "please run this command in the pitching board!", ephemeral=True
             )
             return
 
@@ -61,7 +61,7 @@ class IdeaMaker(commands.Cog):
 
         view = _ForwardView()
         await interaction.response.send_message(
-            "Are you sure you want to forward this idea to the project board?",
+            "Are you sure you want to forward this pitch to the project board?",
             ephemeral=True,
             view=view,
         )
@@ -74,7 +74,7 @@ class IdeaMaker(commands.Cog):
             msg = await thread.fetch_message(thread.id)
 
             await interaction.followup.send(
-                "Forwarding your idea to the project board...", ephemeral=True
+                "Forwarding your pitch to the project board...", ephemeral=True
             )
             project_forum = await interaction.guild.fetch_channel(
                 config.project_board_forum_id
@@ -104,4 +104,4 @@ class IdeaMaker(commands.Cog):
 
 
 async def setup(bot: Bot) -> None:
-    await bot.add_cog(IdeaMaker(bot))
+    await bot.add_cog(PitchCreator(bot))

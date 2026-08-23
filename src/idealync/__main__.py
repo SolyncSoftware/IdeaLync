@@ -49,9 +49,9 @@ def main() -> None:
         "APP_DISCORD_TOKEN"
     )
 
-    idea_board_forum_id = int(
-        os.environ.get("IDEA_BOARD_FORUM_ID")
-        or required_env_variable_error("IDEA_BOARD_FORUM_ID")
+    pitching_board_forum_id = int(
+        os.environ.get("PITCHING_BOARD_FORUM_ID")
+        or required_env_variable_error("PITCHING_BOARD_FORUM_ID")
     )
 
     project_board_forum_id = int(
@@ -64,7 +64,7 @@ def main() -> None:
         member_role_id,
         observer_role_id,
         meeting_voice_channel_id,
-        idea_board_forum_id,
+        pitching_board_forum_id,
         project_board_forum_id,
     )
     bot.run(token)

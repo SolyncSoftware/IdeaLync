@@ -9,5 +9,5 @@ class IdeaLyncConfig:
     member_role_id: int  # the member role id
     observer_role_id: int  # observer/inactive role id
     meeting_voice_channel_id: int  # meeting voice channel id for meet scheduler
-    idea_board_forum_id: int  # idea board forum channel id
+    pitching_board_forum_id: int  # pitching board forum channel id
     project_board_forum_id: int  # project board forum channel id
