@@ -13,6 +13,18 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
+            - name: Create .env file
+              run: |
+                  echo "DISCORD_TOKEN=${{ secrets.DISCORD_TOKEN }}" >> .env
+                  echo "PITCHING_CHANNEL_ID=${{ secrets.PITCHING_CHANNEL_ID }}" >> .env
+                  echo "PITCHING_BOARD_FORUM_ID=${{ secrets.PITCHING_BOARD_FORUM_ID }}" >> .env
+                  echo "PROJECT_BOARD_FORUM_ID=${{ secrets.PROJECT_BOARD_FORUM_ID }}" >> .env
+                  echo "MEETING_VOICE_CHANNEL_ID=${{ secrets.MEETING_VOICE_CHANNEL_ID }}" >> .env
+                  echo "MEETING_ANNOUNCE_ID=${{ secrets.MEETING_ANNOUNCE_ID }}" >> .env
+                  echo "BRAINSTORMING_TAG_ID=${{ secrets.BRAINSTORMING_TAG_ID }}" >> .env
+                  echo "HELP_WANTED_TAG_ID=${{ secrets.HELP_WANTED_TAG_ID }}" >> .env
+                  echo "PENDING_TAG_ID=${{ secrets.PENDING_TAG_ID }}" >> .env
+
             - name: Build and Run Docker Container Locally
               run: |
                   docker build -t idealync-bot:deploy .
