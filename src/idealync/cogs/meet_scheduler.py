@@ -25,7 +25,7 @@ class MeetSchedulerModal(ui.Modal, title="Schedule a meeting..."):
     user_select = ui.Label(
         text="Who's attending?", component=ui.UserSelect(max_values=25, min_values=2)
     )
-    timestamp = ui.Label(text="Timestamp", component=ui.TextInput())
+    timestamp = ui.Label(text="Timestamp (i.e 8-25-2026)", component=ui.TextInput())
 
     async def on_submit(self, interaction: discord.Interaction) -> None:
         if interaction.guild is None:
@@ -63,7 +63,7 @@ class MeetSchedulerModal(ui.Modal, title="Schedule a meeting..."):
             return
 
         try:
-            await interaction.guild.create_scheduled_event(
+            event = await interaction.guild.create_scheduled_event(
                 name=name,
                 start_time=timestamp,
                 description=f"{description}\n\nAttending: {', '.join([f'<@{member.id}>' for member in attendees])}",
@@ -78,6 +78,34 @@ class MeetSchedulerModal(ui.Modal, title="Schedule a meeting..."):
                 "bot doesn't have permissions to create an event"
             )
             raise e
+
+        announce_channel = await interaction.guild.fetch_channel(
+                self.bot.config.meeting_announce_id
+            )
+
+        if isinstance(announce_channel, (discord.TextChannel, discord.Thread)):
+                attendee_pings = " ".join([f"<@{member.id}>" for member in attendees])
+                embed = discord.Embed(
+                    title=f"Meeting scheduled: {name}",
+                    description=description,
+                    color=discord.Color(0xF36647),
+                    url=event.url,
+                )
+                embed.add_field(
+                    name="Time", 
+                    value=f"<t:{int(timestamp.timestamp())}:F> (<t:{int(timestamp.timestamp())}:R>)"
+                )
+                embed.add_field(name="Location", value=channel_id.mention)
+                embed.add_field(
+                    name="Attendees",
+                    value=attendee_pings,
+                    inline=False,
+                )
+                
+                await announce_channel.send(
+                    content=f"{attendee_pings}",
+                    embed=embed
+                )
 
 
 class MeetScheduler(commands.Cog):

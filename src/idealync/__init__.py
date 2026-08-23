@@ -16,8 +16,13 @@ class Bot(commands.Bot):
         role_channel_id: int,
         member_role_id: int,
         observer_role_id: int,
+        brainstorming_tag_id: int, 
+        help_wanted_tag_id: int,
+        pending_tag_id: int,
         meeting_voice_channel_id: int,
-        idea_board_forum_id: int,
+        meeting_announce_id: int,
+        pitching_board_forum_id: int,
+        pitching_channel_id: int,
         project_board_forum_id: int,
     ) -> None:
         # todo, make this shit dynamic
@@ -26,8 +31,13 @@ class Bot(commands.Bot):
             role_channel_id=role_channel_id,
             member_role_id=member_role_id,
             observer_role_id=observer_role_id,
+            brainstorming_tag_id=brainstorming_tag_id, 
+            help_wanted_tag_id=help_wanted_tag_id,
+            pending_tag_id=pending_tag_id,
             meeting_voice_channel_id=meeting_voice_channel_id,
-            idea_board_forum_id=idea_board_forum_id,
+            meeting_announce_id=meeting_announce_id,
+            pitching_board_forum_id=pitching_board_forum_id,
+            pitching_channel_id=pitching_channel_id,
             project_board_forum_id=project_board_forum_id,
         )
 
