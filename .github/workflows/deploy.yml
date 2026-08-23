@@ -1,0 +1,25 @@
+name: Deploy IdeaLync (Local runner)
+
+on:
+    push:
+        branches:
+            - deploy
+
+jobs:
+    deploy:
+        runs-on: self-hosted
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Build and Run Docker Container Locally
+              run: |
+                  docker build -t idealync-bot:deploy .
+                  docker stop idealync-bot-deploy || true
+                  docker rm idealync-bot-deploy || true
+                  docker run -d \
+                    --name idealync-bot-deploy \
+                    --restart unless-stopped \
+                    -p 3000:3000 \
+                    idealync-bot:deploy
