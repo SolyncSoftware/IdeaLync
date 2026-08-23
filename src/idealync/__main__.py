@@ -45,6 +45,11 @@ def main() -> None:
         or required_env_variable_error("MEETING_VOICE_CHANNEL_ID")
     )
 
+    meeting_announce_id = int(
+        os.environ.get("MEETING_ANNOUNCE_ID")
+        or required_env_variable_error("MEETING_ANNOUNCE_ID")
+    )
+
     token = os.environ.get("APP_DISCORD_TOKEN") or required_env_variable_error(
         "APP_DISCORD_TOKEN"
     )
@@ -54,17 +59,43 @@ def main() -> None:
         or required_env_variable_error("PITCHING_BOARD_FORUM_ID")
     )
 
+    pitching_channel_id = int(
+        os.environ.get("PITCHING_CHANNEL_ID")
+        or required_env_variable_error("PITCHING_CHANNEL_ID")
+    )
+
     project_board_forum_id = int(
         os.environ.get("PROJECT_BOARD_FORUM_ID")
         or required_env_variable_error("PROJECT_BOARD_FORUM_ID")
+    )
+
+    
+    brainstorming_tag_id = int(
+        os.environ.get("BRAINSTORMING_TAG_ID")
+        or required_env_variable_error("BRAINSTORMING_TAG_ID")
+    )
+
+    help_wanted_tag_id = int(
+        os.environ.get("HELP_WANTED_TAG_ID")
+        or required_env_variable_error("HELP_WANTED_TAG_ID")
+    )
+
+    pending_tag_id = int(
+        os.environ.get("PENDING_TAG_ID")
+        or required_env_variable_error("PENDING_TAG_ID")
     )
 
     bot = Bot(
         role_channel_id,
         member_role_id,
         observer_role_id,
+        brainstorming_tag_id, 
+        help_wanted_tag_id,
+        pending_tag_id,
         meeting_voice_channel_id,
+        meeting_announce_id,
         pitching_board_forum_id,
+        pitching_channel_id,
         project_board_forum_id,
     )
     bot.run(token)
