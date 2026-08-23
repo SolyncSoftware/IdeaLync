@@ -81,7 +81,8 @@ class PitchSubmitModal(ui.Modal, title="Submit a Pitch"):
         content = (
             f"**Submitted by:** {interaction.user.mention}\n"
             f"**Members recruited:** {ping_mentions}\n\n"
-            f"### Description\n{desc_val}"
+            f"### Description\n{desc_val}\n\n"
+            f"Remember to use `/forward` once you're done brainstorming!"
         )
 
         try:
