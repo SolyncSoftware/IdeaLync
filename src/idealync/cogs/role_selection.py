@@ -26,6 +26,7 @@ class RoleSelect(discord.ui.Select[Any]):
             ),
         ]
         super().__init__(
+            custom_id="idealync:role_select",
             placeholder="Choose your role",
             min_values=1,
             max_values=1,
@@ -74,6 +75,10 @@ class RoleSelect(discord.ui.Select[Any]):
             ephemeral=True,
         )
 
+class RoleSelectionView(discord.ui.View):
+    def __init__(self, bot: Bot) -> None:
+        super().__init__(timeout=None)
+        self.add_item(RoleSelect(bot))
 
 class RoleSelection(commands.Cog):
     def __init__(self, bot: Bot) -> None:
@@ -108,8 +113,7 @@ class RoleSelection(commands.Cog):
             color=discord.Color(0xF36647),
         )
 
-        view = discord.ui.View()
-        view.add_item(RoleSelect(self.bot))
+        view = RoleSelectionView(self.bot)
 
         message = await channel.send(embed=embed, view=view)
 
