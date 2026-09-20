@@ -1,9 +1,8 @@
-package org.solync.idealync.cogs
+package org.solync.idealync.modules
 
 import dev.kord.common.Color
 import dev.kord.common.entity.ButtonStyle
 import dev.kord.common.entity.TextInputStyle
-import dev.kord.common.entity.optional.optional
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.createMessage
 import dev.kord.core.behavior.interaction.modal

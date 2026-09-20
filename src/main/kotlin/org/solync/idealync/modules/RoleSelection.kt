@@ -1,4 +1,4 @@
-package org.solync.idealync.cogs
+package org.solync.idealync.modules
 
 import dev.kord.common.Color
 import dev.kord.core.Kord
