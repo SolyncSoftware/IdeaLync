@@ -12,6 +12,7 @@ dependencies {
     implementation(libs.dotenv.kotlin)
     implementation(platform(libs.koin.bom))
     implementation(libs.bundles.koin)
+    implementation(libs.guava)
     runtimeOnly(libs.slf4j.simple)
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")

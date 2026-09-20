@@ -2,6 +2,7 @@ package org.solync.idealync
 
 import dev.kord.core.Kord
 import org.solync.idealync.modules.PitchCreator
+import org.solync.idealync.modules.PitchForwarding
 import org.solync.idealync.modules.RoleSelection
 
 interface IdeaLyncModule {
@@ -14,5 +15,6 @@ interface IdeaLyncModule {
 
 val ideaLyncModules = listOf<IdeaLyncModule>(
     RoleSelection,
-    PitchCreator
+    PitchCreator,
+    PitchForwarding
 )
