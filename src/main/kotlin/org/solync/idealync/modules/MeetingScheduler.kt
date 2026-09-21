@@ -16,7 +16,6 @@ import dev.kord.core.on
 import dev.kord.rest.builder.message.embed
 import org.solync.idealync.IdeaLyncModule
 import org.solync.idealync.ideaLyncConfig
-import org.solync.idealync.utils.requireNotNull
 import org.solync.idealync.utils.url
 import kotlin.time.Instant
 
@@ -69,10 +68,10 @@ object MeetingScheduler : IdeaLyncModule {
     private suspend fun GuildModalSubmitInteractionCreateEvent.scheduleModalSubmit() {
         val response = interaction.deferEphemeralResponse()
 
-        val title = response.requireNotNull(interaction.textInputs[IDEALYNC_SCHEDULE_MEETING_TITLE_ARG]?.value) { "Title is required for a meeting" }
-        val description = response.requireNotNull(interaction.textInputs[IDEALYNC_SCHEDULE_MEETING_DESCRIPTION_ARG]?.value) { "Description is required for a meeting" }
-        val users = response.requireNotNull(interaction.userSelects[IDEALYNC_SCHEDULE_MEETING_USERS_ARG]?.valueIds) { "Attendees are required for a meeting" }
-        val timestampStr = response.requireNotNull(interaction.textInputs[IDEALYNC_SCHEDULE_MEETING_TIME_ARG]?.value) { "Timestamp is required for a meeting" }
+        val title = requireNotNull(interaction.textInputs[IDEALYNC_SCHEDULE_MEETING_TITLE_ARG]?.value) { "Title is required for a meeting" }
+        val description = requireNotNull(interaction.textInputs[IDEALYNC_SCHEDULE_MEETING_DESCRIPTION_ARG]?.value) { "Description is required for a meeting" }
+        val users = requireNotNull(interaction.userSelects[IDEALYNC_SCHEDULE_MEETING_USERS_ARG]?.valueIds) { "Attendees are required for a meeting" }
+        val timestampStr = requireNotNull(interaction.textInputs[IDEALYNC_SCHEDULE_MEETING_TIME_ARG]?.value) { "Timestamp is required for a meeting" }
 
         val instant = try {
             Instant.parse(timestampStr)
