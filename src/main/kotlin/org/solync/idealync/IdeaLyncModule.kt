@@ -1,6 +1,7 @@
 package org.solync.idealync
 
 import dev.kord.core.Kord
+import org.solync.idealync.modules.MeetingScheduler
 import org.solync.idealync.modules.MemberEventLogger
 import org.solync.idealync.modules.PitchCreator
 import org.solync.idealync.modules.PitchForwarding
@@ -18,5 +19,6 @@ val ideaLyncModules = listOf<IdeaLyncModule>(
     RoleSelection,
     PitchCreator,
     PitchForwarding,
-    MemberEventLogger
+    MemberEventLogger,
+    MeetingScheduler
 )

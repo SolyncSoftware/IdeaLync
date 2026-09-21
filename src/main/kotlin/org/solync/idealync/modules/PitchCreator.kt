@@ -16,7 +16,7 @@ import dev.kord.rest.builder.channel.thread.applyTag
 import dev.kord.rest.builder.component.actionRow
 import dev.kord.rest.builder.message.embed
 import org.solync.idealync.IdeaLyncModule
-import org.solync.idealync.hasSelfEmbed
+import org.solync.idealync.utils.hasSelfEmbed
 import org.solync.idealync.ideaLyncConfig
 
 
