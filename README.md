@@ -19,12 +19,18 @@
 
 To begin development and testing locally, please follow these steps in your terminal of choice:
 
-1. Install JDK 25.
-2. Clone the repo by running `git clone https://github.com/SolyncSoftware/IdeaLync.git`.
-3. Go inside the newly cloned folder (`cd IdeaLync`).
-4. Now configure `.env` by populating the values in `.env_example`.
+1. Clone the repo by running `git clone https://github.com/SolyncSoftware/IdeaLync.git`.
+2. Go inside the newly cloned folder (`cd IdeaLync`).
+3. Configure `.env` by populating the values in `.env_example`.
+4. Install JDK 25.
 5. Now run `./gradlew run` to run the bot.
 6. See the bot come to life! :)
+
+### Nix
+
+1. (optional) Update deps: `nix build .#idealync.mitmCache.updateScript --print-out-paths`
+2. `nix build .` to build, **or**
+3. Enter a shell `nix shell .` and run `IdeaLync`
 
 ## Goals
 
