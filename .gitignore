@@ -1,20 +1,11 @@
-node_modules
-__pycache__/
+# Ignore Gradle project-specific cache directory
+.gradle
 
-# Output
-.output
-.vercel
-.netlify
-.wrangler
-/.svelte-kit
-/build
-/dist
-.venv/
-app.log
+# Ignore Gradle build output directory
+build
 
-# OS
-.DS_Store
-Thumbs.db
+# Ignore Kotlin plugin data
+.kotlin
 
 # Env
 .env
@@ -22,9 +13,6 @@ Thumbs.db
 !.env.example
 !.env.test
 
-# Vite
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
 .idea/
 
 # nix
