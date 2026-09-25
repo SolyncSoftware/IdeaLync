@@ -1,25 +1,19 @@
-FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS base
+FROM eclipse-temurin:25-jdk-noble as build
 
 WORKDIR /app
 
-# Enable bytecode compilation and use standard copies for virtualenv dependencies
-ENV UV_COMPILE_BYTECODE=1 \
-    UV_LINK_MODE=copy
-
-# 1. Install dependencies first (cached layer unless lock file/pyproject changes)
-RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --frozen --no-install-project --no-dev
-
-# 2. Copy application source code
 COPY . .
 
-# 3. Build and install the project package itself
-RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --no-dev
+RUN --mount=type=cache,target=/root/.gradle \
+    --mount=type=cache,target=.gradle \
+    ./gradlew :distTar
 
-# Place virtual environment binaries in PATH
-ENV PATH="/app/.venv/bin:$PATH"
+FROM eclipse-temurin:25-jdk-noble
 
-CMD ["uv", "run", "idealync"]
+WORKDIR /app
+
+RUN --mount=type=bind,from=build,source=/app/build/distributions/IdeaLync.tar,target=IdeaLync.tar \
+    tar xf IdeaLync.tar
+
+CMD ["IdeaLync/bin/IdeaLync"]
+

@@ -1,0 +1,30 @@
+[versions]
+kotlin = "2.4.0"
+junit-jupiter-engine = "6.0.1"
+kord = "0.18.1"
+dotenv-kotlin = "6.5.1"
+koin = "4.2.0"
+slf4j = "2.0.19"
+guava = "33.7.1-jre"
+
+[libraries]
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter-engine" }
+kord-core = { module = "dev.kord:kord-core", version.ref = "kord" }
+dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version.ref = "dotenv-kotlin" }
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
+
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
+
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
+koin-core = { module = "io.insert-koin:koin-core" }
+koin-test = { module = "io.insert-koin:koin-test" }
+koin-test-junit5 = { module = "io.insert-koin:koin-test-junit5" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+
+[bundles]
+koin = ["koin-core"]
+koin-test = ["koin-test", "koin-test-junit5"]
+

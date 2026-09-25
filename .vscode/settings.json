@@ -1,6 +1,3 @@
 {
-    "python.analysis.typeCheckingMode": "strict",
-    "conventionalCommits.scopes": [""],
-    "workbench.browser.openLocalhostLinks": false,
-    "python.terminal.useEnvFile": true
+    "java.compile.nullAnalysis.mode": "disabled"
 }
