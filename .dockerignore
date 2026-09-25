@@ -1,7 +1,6 @@
 # Local Build & Cache Directories
 .gradle/
 .kotlin/
-.venv/
 build/
 
 # IDE & Editor Files
@@ -11,14 +10,21 @@ build/
 # Nix & Dependency Lock Files
 deps.json
 flake.lock
-uv.lock
+flake.nix
+default.nix
+.envrc
+.direnv/
+result
 
 # Environment & Local Configuration
 .env
 .env.example
+.env.*
 
 # Git & CI/CD
 .git/
+.gitattributes
+.gitignore
 .github/
 
 # Documentation & Repository Files
