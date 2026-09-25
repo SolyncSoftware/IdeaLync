@@ -25,6 +25,7 @@ object PitchCreator : IdeaLyncModule {
     private const val IDEALYNC_SUBMIT_PITCH_MODAL_ID = "idealync:submit_pitch_modal"
 
     private const val IDEALYNC_PITCH_TITLE_ID = "idealync:pitch_title"
+    private const val IDEALYNC_DOCUMENT_ID = "idealync:document_link"
     private const val IDEALYNC_PITCH_DESCRIPTION_ID = "idealync:pitch_description"
     private const val IDEALYNC_PITCH_MEMBERS_ID = "idealync:pitch_members"
 
@@ -46,7 +47,8 @@ object PitchCreator : IdeaLyncModule {
     }
 
     private suspend fun ensurePitchPrompt(kord: Kord) {
-        val channel = requireNotNull(kord.getChannel(ideaLyncConfig.pitchingChannelId)) { "Pitching channel does not exist" }
+        val channel =
+            requireNotNull(kord.getChannel(ideaLyncConfig.pitchingChannelId)) { "Pitching channel does not exist" }
         require(channel is TextChannel) { "Pitching channel is not a text channel." }
         channel.messages
             .filter { it.author?.isSelf == true }
@@ -84,6 +86,12 @@ object PitchCreator : IdeaLyncModule {
                     placeholder = "Title for your idea"
                 }
             }
+            label("Collaborative document link") {
+                textInput(TextInputStyle.Short, IDEALYNC_DOCUMENT_ID) {
+                    allowedLength = 1..4000
+                    placeholder = "Document link for pitch (like Google Doc)"
+                }
+            }
             label("Description") {
                 textInput(TextInputStyle.Paragraph, IDEALYNC_PITCH_DESCRIPTION_ID) {
                     allowedLength = 1..4000
@@ -106,18 +114,25 @@ object PitchCreator : IdeaLyncModule {
         require(channel is ForumChannel) { "Configured pitching board forum channel is invalid." }
 
         val title = requireNotNull(interaction.textInputs[IDEALYNC_PITCH_TITLE_ID]?.value) { "Pitching title was null" }
-        val description = requireNotNull(interaction.textInputs[IDEALYNC_PITCH_DESCRIPTION_ID]?.value) { "Pitching description was null" }
+        val document = requireNotNull(interaction.textInputs[IDEALYNC_DOCUMENT_ID]?.value) { "Document link was null" }
+        val description =
+            requireNotNull(interaction.textInputs[IDEALYNC_PITCH_DESCRIPTION_ID]?.value) { "Pitching description was null" }
         val members = interaction.userSelects[IDEALYNC_PITCH_MEMBERS_ID]?.valueIds
 
         val thread = channel.startPublicThread(title) {
-            message("""
+            message(
+                """
                 **Submitted by:** ${interaction.user.mention}
+                
+                ### Document link
+                $document
                 
                 ### Description
                 $description
                 
                 Remember to use `/forward` once you're done brainstorming!
-            """.trimIndent())
+            """.trimIndent()
+            )
             applyTag(ideaLyncConfig.brainstormingTagId)
         }
 
