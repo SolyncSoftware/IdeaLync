@@ -11,8 +11,8 @@ import dev.kord.core.on
 import dev.kord.rest.builder.component.actionRow
 import dev.kord.rest.builder.component.option
 import dev.kord.rest.builder.message.embed
+import kotlinx.coroutines.flow.filter
 import org.solync.idealync.IdeaLyncModule
-import org.solync.idealync.utils.hasSelfEmbed
 import org.solync.idealync.ideaLyncConfig
 
 object RoleSelection : IdeaLyncModule {
@@ -53,10 +53,9 @@ object RoleSelection : IdeaLyncModule {
     private suspend fun ensureRolePrompt(kord: Kord) {
         val channel = requireNotNull(kord.getChannel(ideaLyncConfig.roleChannelId)) { "Role channel does not exist" }
         require(channel is TextChannel) { "Role channel is not a text channel." }
-
-        if (channel.hasSelfEmbed("Choose your role")) {
-            return
-        }
+        channel.messages
+            .filter { it.author?.isSelf == true }
+            .collect { it.delete() }
 
         channel.createMessage {
             embed {

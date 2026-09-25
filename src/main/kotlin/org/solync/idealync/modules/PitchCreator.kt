@@ -15,8 +15,8 @@ import dev.kord.core.on
 import dev.kord.rest.builder.channel.thread.applyTag
 import dev.kord.rest.builder.component.actionRow
 import dev.kord.rest.builder.message.embed
+import kotlinx.coroutines.flow.filter
 import org.solync.idealync.IdeaLyncModule
-import org.solync.idealync.utils.hasSelfEmbed
 import org.solync.idealync.ideaLyncConfig
 
 
@@ -48,10 +48,10 @@ object PitchCreator : IdeaLyncModule {
     private suspend fun ensurePitchPrompt(kord: Kord) {
         val channel = requireNotNull(kord.getChannel(ideaLyncConfig.pitchingChannelId)) { "Pitching channel does not exist" }
         require(channel is TextChannel) { "Pitching channel is not a text channel." }
+        channel.messages
+            .filter { it.author?.isSelf == true }
+            .collect { it.delete() }
 
-        if (channel.hasSelfEmbed("Pitch an idea!")) {
-            return
-        }
         channel.createMessage {
             embed {
                 title = "Pitch an idea!"
