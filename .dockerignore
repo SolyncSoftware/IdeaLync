@@ -1,1 +1,28 @@
-.gitignore
+# Local Build & Cache Directories
+.gradle/
+.kotlin/
+.venv/
+build/
+
+# IDE & Editor Files
+.vscode/
+.idea/
+
+# Nix & Dependency Lock Files
+deps.json
+flake.lock
+uv.lock
+
+# Environment & Local Configuration
+.env
+.env.example
+
+# Git & CI/CD
+.git/
+.github/
+
+# Documentation & Repository Files
+Dockerfile
+.dockerignore
+LICENSE.md
+README.md
