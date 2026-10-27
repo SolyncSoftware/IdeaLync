@@ -30,7 +30,8 @@ data class IdeaLyncConfig(
     val meetingAnnounceId: Snowflake,
     val pitchingChannelId: Snowflake,
     val pitchingBoardForumId: Snowflake,
-    val projectBoardForumId: Snowflake
+    val projectBoardForumId: Snowflake,
+    val guildId: Snowflake = Snowflake(0L)
 )
 
 fun Dotenv.getIdeaLyncConfig() = IdeaLyncConfig(
@@ -44,7 +45,8 @@ fun Dotenv.getIdeaLyncConfig() = IdeaLyncConfig(
     meetingAnnounceId = Snowflake(this["MEETING_ANNOUNCE_ID"].toLong()),
     pitchingChannelId = Snowflake(this["PITCHING_CHANNEL_ID"].toLong()),
     pitchingBoardForumId = Snowflake(this["PITCHING_BOARD_FORUM_ID"].toLong()),
-    projectBoardForumId = Snowflake(this["PROJECT_BOARD_FORUM_ID"].toLong())
+    projectBoardForumId = Snowflake(this["PROJECT_BOARD_FORUM_ID"].toLong()),
+    guildId = Snowflake((this["GUILD_ID"] ?: System.getenv("GUILD_ID"))?.toLongOrNull() ?: 0L)
 )
 
 val ideaLyncConfig get() = KoinPlatform.getKoin().get<IdeaLyncConfig>()
