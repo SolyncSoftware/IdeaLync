@@ -21,30 +21,31 @@ import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import org.solync.idealync.IdeaLyncModule
+import org.solync.idealync.ideaLyncConfig
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URI
 
 object PeerFeedbackNotifier : IdeaLyncModule {
-    private const val GUILD_ID = 1487558897513398427L
-    private const val ROLE_ID = 1487558897513398432L
     private val cacheFile = File("data/sent_peerfeedback.txt")
 
     override suspend fun onRegister(kord: Kord) {
-        val guildSnowflake = Snowflake(GUILD_ID)
-        val roleSnowflake = Snowflake(ROLE_ID)
+        val guildSnowflake = ideaLyncConfig.guildId
+        val roleSnowflake = ideaLyncConfig.memberRoleId
 
-        kord.createGuildChatInputCommand(guildSnowflake, "round", "Peer feedback round management") {
-            subCommand("start", "Start a feedback round")
-            subCommand("end", "End the active feedback round")
+        if (guildSnowflake.value != 0uL) {
+            kord.createGuildChatInputCommand(guildSnowflake, "round", "Peer feedback round management") {
+                subCommand("start", "Start a feedback round")
+                subCommand("end", "End the active feedback round")
+            }
         }
 
         kord.on<GuildChatInputCommandInteractionCreateEvent> {
             if (interaction.command.rootName != "round") return@on
-            if (interaction.guildId != guildSnowflake) return@on
+            if (guildSnowflake.value != 0uL && interaction.guildId != guildSnowflake) return@on
 
             val response = interaction.deferEphemeralResponse()
-            val member = interaction.user.asMember(guildSnowflake)
+            val member = interaction.user.asMember(interaction.guildId)
             if (!member.roleIds.contains(roleSnowflake)) {
                 response.respond { content = "missing permissions" }
                 return@on
@@ -53,7 +54,10 @@ object PeerFeedbackNotifier : IdeaLyncModule {
             val subName = (interaction.command as? SubCommand)?.name ?: return@on
             val action = if (subName == "end") "end" else "start"
             val env = dotenv { ignoreIfMissing = true }
-            val endpoint = (env["PEERFEEDBACK_API_URL"] ?: System.getenv("PEERFEEDBACK_API_URL") ?: "http://localhost:5173").trimEnd('/')
+            val endpoint = (env["PEERFEEDBACK_API_URL"] ?: System.getenv("PEERFEEDBACK_API_URL"))?.trimEnd('/') ?: run {
+                response.respond { content = "round $action failed" }
+                return@on
+            }
 
             try {
                 val conn = URI.create("$endpoint/api/session/$action").toURL().openConnection() as HttpURLConnection
