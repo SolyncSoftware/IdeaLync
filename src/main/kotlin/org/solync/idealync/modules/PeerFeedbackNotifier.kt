@@ -23,11 +23,15 @@ import kotlinx.serialization.json.jsonPrimitive
 import org.solync.idealync.IdeaLyncModule
 import org.solync.idealync.ideaLyncConfig
 import java.io.File
-import java.net.HttpURLConnection
 import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
+import java.time.Duration
 
 object PeerFeedbackNotifier : IdeaLyncModule {
     private val cacheFile = File("data/sent_peerfeedback.txt")
+    private val httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).build()
 
     override suspend fun onRegister(kord: Kord) {
         val guildSnowflake = ideaLyncConfig.guildId
@@ -55,26 +59,32 @@ object PeerFeedbackNotifier : IdeaLyncModule {
             val action = if (subName == "end") "end" else "start"
             val env = dotenv { ignoreIfMissing = true }
             val endpoint = (env["PEERFEEDBACK_API_URL"] ?: System.getenv("PEERFEEDBACK_API_URL"))?.trimEnd('/') ?: run {
-                response.respond { content = "round $action failed" }
+                response.respond { content = "round $action failed: PEERFEEDBACK_API_URL missing" }
                 return@on
             }
 
             try {
-                val conn = URI.create("$endpoint/api/session/$action").toURL().openConnection() as HttpURLConnection
-                conn.requestMethod = "POST"
-                conn.connectTimeout = 10_000
-                conn.readTimeout = 10_000
-                val raw = conn.inputStream.bufferedReader().use { it.readText() }
-                val obj = Json.parseToJsonElement(raw).jsonObject
-                val sessionId = obj["session"]?.jsonObject?.get("id")?.jsonPrimitive?.contentOrNull
+                val req = HttpRequest.newBuilder(URI.create("$endpoint/api/session/$action"))
+                    .POST(HttpRequest.BodyPublishers.noBody())
+                    .timeout(Duration.ofSeconds(10))
+                    .header("User-Agent", "IdeaLync/1.0")
+                    .header("Accept", "application/json")
+                    .build()
+                val res = httpClient.send(req, HttpResponse.BodyHandlers.ofString())
+                val raw = res.body()
+                val obj = runCatching { Json.parseToJsonElement(raw).jsonObject }.getOrNull()
+                val sessionId = obj?.get("session")?.jsonObject?.get("id")?.jsonPrimitive?.contentOrNull
+                val errorMsg = obj?.get("error")?.jsonPrimitive?.contentOrNull
+
                 if (sessionId != null) {
                     val label = if (action == "start") "started" else "ended"
                     response.respond { content = "round $label. session id: $sessionId" }
                 } else {
-                    response.respond { content = "round $action failed" }
+                    val detail = errorMsg ?: if (raw.isNotBlank()) raw.take(150) else "HTTP ${res.statusCode()}"
+                    response.respond { content = "round $action failed: $detail" }
                 }
-            } catch (_: Throwable) {
-                response.respond { content = "round $action failed" }
+            } catch (t: Throwable) {
+                response.respond { content = "round $action failed: ${t.message}" }
             }
         }
     }
@@ -89,11 +99,14 @@ object PeerFeedbackNotifier : IdeaLyncModule {
         CoroutineScope(Dispatchers.IO).launch {
             while (true) {
                 try {
-                    val conn = URI.create("$endpoint/api/session/status").toURL().openConnection()
-                    conn.connectTimeout = 10_000
-                    conn.readTimeout = 10_000
-                    val raw = conn.getInputStream().bufferedReader().use { it.readText() }
-                    val obj = Json.parseToJsonElement(raw).jsonObject
+                    val req = HttpRequest.newBuilder(URI.create("$endpoint/api/session/status"))
+                        .GET()
+                        .timeout(Duration.ofSeconds(10))
+                        .header("User-Agent", "IdeaLync/1.0")
+                        .header("Accept", "application/json")
+                        .build()
+                    val res = httpClient.send(req, HttpResponse.BodyHandlers.ofString())
+                    val obj = Json.parseToJsonElement(res.body()).jsonObject
                     val status = obj["status"]?.jsonPrimitive?.contentOrNull
                     val sessionId = obj["sessionId"]?.jsonPrimitive?.contentOrNull
                     val summary = obj["summary"]?.jsonPrimitive?.contentOrNull
