@@ -5,6 +5,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven("https://snapshots.kord.dev")
 }
 
 dependencies {
