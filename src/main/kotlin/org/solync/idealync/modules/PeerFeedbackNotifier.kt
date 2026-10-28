@@ -116,7 +116,7 @@ object PeerFeedbackNotifier : IdeaLyncModule {
                         if (channel != null) {
                             channel.createMessage {
                                 embed {
-                                    description = summary
+                                    description = "$summary\n-# check results in peerfeedback [here]($endpoint/feedback/$sessionId)"
                                     color = Color(0xF36647)
                                 }
                             }
