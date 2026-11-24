@@ -162,9 +162,9 @@ object MailBridge : IdeaLyncModule {
         val files = mutableListOf<Pair<String, ByteArray>>()
         fun walk(p: Part) {
             when {
-                p.isMimeType("text/plain") && p.disposition != Part.ATTACHMENT && p.fileName == null -> text = p.content as String
-                p.isMimeType("text/html") -> html = p.inputStream.readBytes()
-                p.disposition == Part.ATTACHMENT || p.fileName != null -> files += (p.fileName ?: "attachment.bin") to p.inputStream.readBytes()
+                p.isMimeType("text/plain") && p.disposition != Part.ATTACHMENT && p.fileName == null -> text = readCapped(p.inputStream)?.toString(Charsets.UTF_8)
+                p.isMimeType("text/html") -> html = readCapped(p.inputStream)
+                p.disposition == Part.ATTACHMENT || p.fileName != null -> readCapped(p.inputStream)?.let { if (!isBinary(p.fileName ?: "attachment.bin", it)) files += (p.fileName ?: "attachment.bin") to it }
                 p.content is Multipart -> {
                     val mp = p.content as Multipart
                     for (i in 0 until mp.count) walk(mp.getBodyPart(i))
@@ -172,8 +172,28 @@ object MailBridge : IdeaLyncModule {
             }
         }
         walk(m)
-        val body = text ?: html?.let { Jsoup.parse(String(it)).text() } ?: ""
+        val body = text ?: html?.let { htmlToText(String(it)) } ?: ""
         return Triple(body, html, files.take(9))
+    }
+
+    private fun readCapped(s: java.io.InputStream, max: Int = 24 * 1024 * 1024): ByteArray? {
+        val b = s.readNBytes(max + 1)
+        return if (b.size > max) null else b
+    }
+
+    private fun isBinary(name: String, b: ByteArray): Boolean {
+        val ext = name.substringAfterLast('.', "").lowercase()
+        if (ext in setOf("exe", "elf", "so", "dll", "bin", "msi", "bat", "cmd", "sh", "jar", "class", "deb", "rpm", "dmg", "apk", "vbs", "ps1", "scr")) return true
+        return b.size >= 4 && ((b[0] == 0x7F.toByte() && b[1] == 69.toByte() && b[2] == 76.toByte() && b[3] == 70.toByte()) || (b[0] == 77.toByte() && b[1] == 90.toByte()))
+    }
+
+    private fun htmlToText(raw: String): String {
+        val s = raw
+            .replace(Regex("(?i)<br\\s*/?>"), "\n")
+            .replace(Regex("(?i)</(p|div|h[1-6]|li|tr|blockquote)>"), "\n\n")
+            .replace(Regex("(?i)<(b|strong)>"), "**")
+            .replace(Regex("(?i)</(b|strong)>"), "**")
+        return Jsoup.parse(s).wholeText().replace(Regex("\n{3,}"), "\n\n").trim()
     }
 
     /**
