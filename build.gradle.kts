@@ -14,6 +14,8 @@ dependencies {
     implementation(platform(libs.koin.bom))
     implementation(libs.bundles.koin)
     implementation(libs.guava)
+    implementation(libs.angus.mail)
+    implementation(libs.jsoup)
     implementation(libs.slf4j.api)
     runtimeOnly(libs.slf4j.simple)
 
