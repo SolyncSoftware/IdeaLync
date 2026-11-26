@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
 import org.solync.idealync.IdeaLyncModule
 import java.io.File
+import java.security.MessageDigest
 import java.util.Properties
 
 /**
@@ -99,10 +100,11 @@ object MailBridge : IdeaLyncModule {
                     val sent = if (sentFile.exists()) sentFile.readLines().toSet() else emptySet()
                     for (m in folder.search(FlagTerm(Flags(Flags.Flag.SEEN), false))) {
                         val id = m.getHeader("Message-ID")?.firstOrNull() ?: "${m.sentDate}-${m.subject}"
-                        if (id !in sent) {
+                        val key = MessageDigest.getInstance("SHA-256").digest(id.toByteArray()).joinToString("") { "%02x".format(it) }
+                        if (key !in sent) {
                             post(kord, channelId, email, m)
                             sentFile.parentFile?.mkdirs()
-                            sentFile.appendText("$id\n")
+                            sentFile.appendText("$key\n")
                         }
                         m.setFlag(Flags.Flag.SEEN, true)
                     }
