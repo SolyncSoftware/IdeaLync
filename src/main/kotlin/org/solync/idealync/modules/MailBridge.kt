@@ -147,8 +147,9 @@ object MailBridge : IdeaLyncModule {
                     appendLine("**to:** $email")
                     appendLine()
                     appendLine("**body:**")
-                    appendLine()
-                    append(body)
+                    appendLine("```")
+                    appendLine(body)
+                    append("```")
                     if (html != null) append("\n\n-# email contained html. original html is in the attachment below")
                 }).take(4096)
             }
