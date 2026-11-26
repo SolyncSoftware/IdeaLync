@@ -30,6 +30,11 @@ jobs:
                   echo "MEETING_ANNOUNCE_ID=${{ secrets.MEETING_ANNOUNCE_ID }}" >> .env
                   echo "PEERFEEDBACK_CHANNEL_ID=${{ secrets.PEERFEEDBACK_CHANNEL_ID }}" >> .env
                   echo "PEERFEEDBACK_API_URL=${{ secrets.PEERFEEDBACK_API_URL }}" >> .env
+                  echo "IMAP_HOST=${{ secrets.IMAP_HOST }}" >> .env
+                  echo "IMAP_PORT=${{ secrets.IMAP_PORT }}" >> .env
+                  echo "IMAP_EMAIL=${{ secrets.IMAP_EMAIL }}" >> .env
+                  echo "IMAP_PASSWORD=${{ secrets.IMAP_PASSWORD }}" >> .env
+                  echo "MAIL_CHANNEL_ID=${{ secrets.MAIL_CHANNEL_ID }}" >> .env
 
             - name: Build and Run Docker Container Locally
               run: |
