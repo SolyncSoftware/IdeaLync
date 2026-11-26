@@ -1,6 +1,7 @@
 package org.solync.idealync
 
 import dev.kord.core.Kord
+import org.solync.idealync.modules.MailBridge
 import org.solync.idealync.modules.MeetingScheduler
 import org.solync.idealync.modules.MemberEventLogger
 import org.solync.idealync.modules.PeerFeedbackNotifier
@@ -22,5 +23,6 @@ val ideaLyncModules = listOf<IdeaLyncModule>(
     PitchForwarding,
     MemberEventLogger,
     MeetingScheduler,
-    PeerFeedbackNotifier
+    PeerFeedbackNotifier,
+    MailBridge
 )
