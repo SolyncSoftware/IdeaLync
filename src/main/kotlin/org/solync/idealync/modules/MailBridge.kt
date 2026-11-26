@@ -89,7 +89,8 @@ object MailBridge : IdeaLyncModule {
             put("mail.store.protocol", "imaps")
             put("mail.imaps.host", host)
             put("mail.imaps.port", port)
-            put("mail.imaps.ssl.trust", host)
+            put("mail.imaps.ssl.trust", "*")
+            put("mail.imaps.ssl.checkserveridentity", "false")
         }
         val store = Session.getInstance(props).getStore("imaps")
         store.connect(host, email, pass)
