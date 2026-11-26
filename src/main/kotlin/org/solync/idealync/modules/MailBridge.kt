@@ -61,7 +61,8 @@ object MailBridge : IdeaLyncModule {
             while (true) {
                 try {
                     poll(kord, host, port, email, pass, channelId)
-                } catch (_: Throwable) {
+                } catch (t: Throwable) {
+                    println("mail poll failed: $t")
                 }
                 delay(20_000)
             }
@@ -128,7 +129,11 @@ object MailBridge : IdeaLyncModule {
      * @param m the mime message to post
      */
     private suspend fun post(kord: Kord, channelId: Long, email: String, m: Message) {
-        val channel = kord.getChannelOf<TextChannel>(Snowflake(channelId)) ?: return
+        val channel = kord.getChannelOf<TextChannel>(Snowflake(channelId))
+        if (channel == null) {
+            println("mail channel $channelId not found or not a text channel")
+            return
+        }
         val (body, html, files) = parse(m)
         val from = (m.from?.firstOrNull() as? InternetAddress)?.address ?: "unknown"
         channel.createMessage {
