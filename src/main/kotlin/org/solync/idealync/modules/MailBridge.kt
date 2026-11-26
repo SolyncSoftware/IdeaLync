@@ -142,11 +142,14 @@ object MailBridge : IdeaLyncModule {
                 title = m.subject?.take(256)
                 color = orange
                 description = sanitize(buildString {
-                    appendLine("from: $from")
-                    appendLine("to: $email")
-                    appendLine("body:")
+                    appendLine("**from:** $from")
+                    appendLine()
+                    appendLine("**to:** $email")
+                    appendLine()
+                    appendLine("**body:**")
+                    appendLine()
                     append(body)
-                    if (html != null) append("\n-# email contained html. original html is in the attachment below")
+                    if (html != null) append("\n\n-# email contained html. original html is in the attachment below")
                 }).take(4096)
             }
             files.forEach { (n, b) -> addFile(n, ChannelProvider(b.size.toLong()) { ByteReadChannel(b) }) }
