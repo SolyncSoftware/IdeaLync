@@ -211,7 +211,7 @@ object MailBridge : IdeaLyncModule {
      * @param s raw text
      * @return sanitized text
      */
-    private fun sanitize(s: String) = s.replace(Regex("[\\p{Cc}]"), "")
+    private fun sanitize(s: String) = s.replace(Regex("[\\p{Cc}&&[^\\n]]"), "")
         .replace("@everyone", "@\u200beveryone")
         .replace("@here", "@\u200bhere")
 }
